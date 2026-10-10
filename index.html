@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ليلة عمرنا ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap');
+
+:root {
+  --pink: #ffb6cc;
+  --deep-pink: #c72c62;
+  --red: #8f153d;
+  --gold: #e8c16a;
+  --cream: #fff5e9;
+  --dark: #280d20;
+}
+
+* { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Cairo', sans-serif;
+  color: var(--cream);
+  background:
+    radial-gradient(ellipse at top, #6e244b 0%, transparent 55%),
+    linear-gradient(135deg, #170b1e, #3c1230 55%, #180a20);
+  overflow-x: hidden;
+}
+
+button, input { font-family: inherit; }
+button { cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.hidden { display: none !important; }
+
+.scene {
+  display: none;
+  min-height: 100vh;
+  padding: 35px 18px;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  animation: sceneIn 1s ease both;
+}
+
+.scene.active { display: flex; }
+.content { width: min(100%, 650px); margin: auto; }
+
+h1, h2, h3 {
+  font-family: 'Amiri', serif;
+  line-height: 1.7;
+}
+
+h1 {
+  color: #ffe3a1;
+  font-size: clamp(32px, 8vw, 54px);
+  margin: 10px 0;
+}
+
+h2 {
+  color: #ffd6e3;
+  font-size: clamp(27px, 6vw, 39px);
+  margin: 10px 0 20px;
+}
+
+p { line-height: 2.2; font-size: 17px; }
+.gold { color: #ffe1a0; }
+.pink { color: #ffb7d1; }
+
+.card {
+  padding: 25px 20px;
+  border: 1px solid rgba(255,220,160,.48);
+  border-radius: 25px;
+  background: linear-gradient(145deg, rgba(255,255,255,.11), rgba(255,255,255,.035));
+  box-shadow: 0 15px 45px rgba(0,0,0,.25);
+  backdrop-filter: blur(7px);
+}
+
+.btn {
+  border: 1px solid rgba(255,232,183,.8);
+  border-radius: 40px;
+  padding: 12px 25px;
+  margin: 8px 5px;
+  color: #42102c;
+  background: linear-gradient(135deg, #ffe7a8, #e9b95e);
+  font-size: 16px;
+  font-weight: 800;
+  box-shadow: 0 7px 22px rgba(0,0,0,.22);
+  transition: transform .25s, filter .25s;
+}
+
+.btn:hover { transform: translateY(-3px); filter: brightness(1.08); }
+.btn:active { transform: scale(.97); }
+.btn.secondary { background: linear-gradient(135deg, #ffd5e3, #f28cb3); }
+
+/* الستارة */
+#curtainScreen {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #170817;
+}
+
+.curtain {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 52%;
+  z-index: 2;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255,255,255,.045) 0,
+      rgba(255,255,255,.045) 5px,
+      transparent 14px,
+      rgba(0,0,0,.15) 23px
+    ),
+    linear-gradient(90deg, #430b27, #9d1748 22%, #5b0d30 47%, #a62050 70%, #39091f);
+  box-shadow: inset 0 0 45px rgba(0,0,0,.5);
+  transition: transform 2s cubic-bezier(.7,0,.2,1);
+}
+
+.curtain.left { left: 0; border-right: 4px solid #e4b85f; }
+.curtain.right { right: 0; border-left: 4px solid #e4b85f; }
+
+#curtainScreen.open .curtain.left { transform: translateX(-105%); }
+#curtainScreen.open .curtain.right { transform: translateX(105%); }
+
+.curtain::after {
+  content: "✦";
+  position: absolute;
+  top: 50%;
+  color: rgba(255,221,148,.6);
+  font-size: 42px;
+  transform: translateY(-50%);
+}
+
+.curtain.left::after { right: 16px; }
+.curtain.right::after { left: 16px; }
+
+.curtain-center {
+  position: relative;
+  z-index: 4;
+  width: min(90%, 480px);
+  padding: 30px 20px;
+  border: 1px solid rgba(255,223,160,.65);
+  border-radius: 24px;
+  background: rgba(27,5,21,.8);
+  box-shadow: 0 0 50px rgba(0,0,0,.4);
+  transition: opacity .5s, transform .5s;
+}
+
+#curtainScreen.open .curtain-center {
+  opacity: 0;
+  transform: scale(.9);
+  pointer-events: none;
+}
+
+.curtain-center h1 { font-size: clamp(32px, 8vw, 48px); }
+
+/* القلوب المتحركة */
+.heart {
+  position: fixed;
+  bottom: -35px;
+  z-index: 0;
+  color: #ff8db7;
+  opacity: .7;
+  pointer-events: none;
+  animation: floatUp linear forwards;
+}
+
+@keyframes floatUp {
+  to { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+}
+
+@keyframes sceneIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.pulse { animation: pulse 2s infinite; }
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.07); }
+}
+
+/* قاعة الفرح */
+.hall {
+  position: relative;
+  padding: 35px 15px;
+  border-radius: 25px;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at top, rgba(255,214,146,.2), transparent 60%),
+    linear-gradient(180deg, rgba(255,228,174,.06), rgba(255,255,255,.025));
+  border: 1px solid rgba(255,220,160,.3);
+}
+
+.hall::before, .hall::after {
+  content: "✦";
+  position: absolute;
+  top: 20px;
+  color: #ffdc8d;
+  font-size: 28px;
+  animation: pulse 2s infinite;
+}
+
+.hall::before { right: 25px; }
+.hall::after { left: 25px; }
+
+.hall-arches {
+  font-size: 55px;
+  color: #e8c16a;
+  letter-spacing: 10px;
+}
+
+.names {
+  font-family: 'Amiri', serif;
+  font-size: clamp(30px, 7vw, 46px);
+  color: #ffe6a8;
+  margin: 10px 0;
+}
+
+.divider { color: #f6cc79; letter-spacing: 8px; margin: 15px 0; }
+
+/* الخاتم والماسة */
+.ring-area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 45px 0 50px;
+}
+
+.ring {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  border: 13px solid transparent;
+  border-radius: 50%;
+  background:
+    linear-gradient(#34152c, #34152c) padding-box,
+    linear-gradient(135deg, #fff0b1, #b77a23, #fff4c7, #c38a35) border-box;
+  box-shadow: 0 0 15px rgba(255,208,106,.25), inset 0 0 8px rgba(255,220,130,.18);
+  transform: rotate(-18deg);
+}
+
+.ring::before {
+  content: "";
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 5px solid #e7bd62;
+  top: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, #fff3c4, #b77a23);
+}
+
+.diamond {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  top: -72px;
+  left: 50%;
+  transform: translateX(-50%) rotate(45deg);
+  background: linear-gradient(135deg, #fff 0%, #c6f5ff 22%, #fff 38%, #91c8ef 57%, #fff 73%, #b9e9ff 100%);
+  border: 2px solid #fff4d2;
+  border-radius: 5px;
+  box-shadow: 0 0 15px #fff, 0 0 30px rgba(150,222,255,.9), 0 0 45px rgba(255,221,150,.55);
+  animation: diamondGlow 2s ease-in-out infinite;
+}
+
+.diamond::before, .diamond::after {
+  content: "";
+  position: absolute;
+  background: rgba(255,255,255,.9);
+}
+
+.diamond::before {
+  left: 50%; top: 0; bottom: 0;
+  width: 2px;
+  transform: translateX(-50%);
+}
+
+.diamond::after {
+  top: 50%; left: 0; right: 0;
+  height: 2px;
+  transform: translateY(-50%);
+}
+
+@keyframes diamondGlow {
+  0%, 100% {
+    filter: brightness(1);
+    box-shadow: 0 0 15px #fff, 0 0 30px rgba(150,222,255,.8);
+  }
+  50% {
+    filter: brightness(1.4);
+    box-shadow: 0 0 22px #fff, 0 0 42px rgba(150,222,255,1), 0 0 55px rgba(255,221,150,.7);
+  }
+}
+
+/* عقد الجواز */
+.contract {
+  position: relative;
+  overflow: hidden;
+  color: #55233a;
+  background:
+    repeating-linear-gradient(0deg, transparent 0, transparent 31px, rgba(171,125,62,.08) 32px),
+    linear-gradient(145deg, #fff9ec, #f4e1bd);
+  border: 7px double #b78c43;
+  border-radius: 8px;
+  padding: 26px 19px;
+  box-shadow: 0 15px 45px rgba(0,0,0,.35);
+}
+
+.contract::before {
+  content: "❦";
+  display: block;
+  color: #b78c43;
+  font-size: 32px;
+  margin-bottom: -5px;
+}
+
+.contract h2 { color: #7d2449; }
+
+.contract p {
+  font-family: 'Amiri', serif;
+  font-size: 19px;
+  line-height: 2;
+}
+
+.contract input {
+  width: 100%;
+  max-width: 350px;
+  padding: 13px 15px;
+  margin: 10px auto;
+  display: block;
+  border: 1px solid #bd8a49;
+  border-radius: 10px;
+  background: #fffaf0;
+  color: #55233a;
+  text-align: center;
+  font-size: 17px;
+  outline: none;
+}
+
+.contract input:focus { box-shadow: 0 0 0 3px rgba(194,154,77,.22); }
+
+.contract-title {
+  border-top: 1px solid #c8a45d;
+  border-bottom: 1px solid #c8a45d;
+  padding: 12px 4px;
+  margin: 15px 0;
+}
+
+.decorated-names {
+  font-family: 'Amiri', serif;
+  font-size: clamp(23px, 6vw, 33px);
+  font-weight: bold;
+  line-height: 1.9;
+  color: #7d2449;
+  text-shadow: 1px 1px 0 #f7dca1;
+  overflow-wrap: anywhere;
+}
+
+/* علبة الحبر */
+.ink-area { margin: 24px auto 10px; max-width: 300px; }
+
+.ink-instruction {
+  font-size: 14px !important;
+  color: #7d2449;
+}
+
+.ink-box {
+  position: relative;
+  width: 220px;
+  height: 135px;
+  margin: 35px auto 22px;
+  cursor: pointer;
+  perspective: 700px;
+  filter: drop-shadow(0 12px 8px rgba(65,26,23,.3));
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+.ink-base {
+  position: absolute;
+  bottom: 0;
+  left: 5px;
+  right: 5px;
+  height: 82px;
+  border: 4px solid #b57a35;
+  border-radius: 14px 14px 24px 24px;
+  background: linear-gradient(145deg, #4d2034, #170c1c 55%, #532039);
+  box-shadow: inset 0 5px 10px rgba(255,255,255,.12), inset 0 -8px 10px rgba(0,0,0,.4);
+}
+
+.ink-surface {
+  position: absolute;
+  left: 23px;
+  right: 23px;
+  bottom: 20px;
+  height: 48px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at 35% 25%, #73506a, #20101f 65%);
+  border: 3px solid #9d7445;
+  box-shadow: inset 0 5px 12px #100710;
+  transition: background .5s;
+}
+
+.ink-lid {
+  position: absolute;
+  z-index: 3;
+  top: -4px;
+  left: 0;
+  width: 145px;
+  height: 45px;
+  border: 3px solid #f4d48b;
+  border-radius: 13px;
+  background: linear-gradient(180deg, #ffe9aa, #d8a64f 45%, #996322);
+  box-shadow: inset 0 3px 4px rgba(255,255,255,.6), 0 5px 7px rgba(0,0,0,.3);
+  transform-origin: 10% 90%;
+  transition: transform .8s ease;
+}
+
+.ink-lid::before {
+  content: "";
+  position: absolute;
+  inset: 7px 12px;
+  border: 1px solid rgba(255,249,210,.65);
+  border-radius: 7px;
+}
+
+.ink-lid::after {
+  content: "حبر الحب";
+  position: absolute;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #54203a;
+  font-family: 'Amiri', serif;
+  font-size: 19px;
+  font-weight: bold;
+}
+
+.ink-box.used .ink-lid { transform: rotate(-48deg) translate(-48px, -28px); }
+
+.ink-box.used .ink-surface {
+  background: radial-gradient(ellipse at 40% 30%, #9a3d67, #40132e 65%, #1b0a1a);
+}
+
+.ink-box.used .ink-surface::after {
+  content: "♥";
+  color: rgba(255,180,210,.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 25px;
+}
+
+.fingerprint {
+  display: none;
+  margin: 16px auto;
+  width: 90px;
+  height: 90px;
+  border: 2px dashed #b77a35;
+  border-radius: 50%;
+  background: rgba(255,255,255,.35);
+  color: #7d2449;
+  font-size: 43px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  animation: sceneIn .5s ease;
+}
+
+.fingerprint.show { display: flex; }
+
+.fingerprint.done {
+  background: #f3d7b5;
+  border-style: solid;
+  box-shadow: 0 0 0 5px rgba(183,122,53,.15);
+}
+
+/* البصمتان */
+.signatures {
+  display: none;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 22px 0;
+  align-items: start;
+}
+
+.signatures.show { display: grid; }
+
+.signature {
+  padding: 12px 5px;
+  border: 1px solid #c7a15a;
+  border-radius: 12px;
+  background: rgba(255,255,255,.25);
+}
+
+.signature-mark {
+  width: 70px;
+  height: 70px;
+  margin: 8px auto;
+  border: 2px dashed #8b4c51;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #8b294e;
+  font-family: 'Amiri', serif;
+  font-size: 31px;
+  font-weight: bold;
+  transform: rotate(-12deg);
+}
+
+.signature-mark.inked {
+  background: radial-gradient(circle, rgba(116,29,67,.2), rgba(255,255,255,.1));
+  border: 3px double #7d2449;
+  box-shadow: inset 0 0 0 4px rgba(125,36,73,.08);
+}
+
+.signature-label {
+  font-family: 'Amiri', serif;
+  color: #7d2449;
+  font-weight: bold;
+  font-size: 17px;
+}
+
+/* الرسالة */
+.letter {
+  position: relative;
+  color: #54213a;
+  background: linear-gradient(145deg, #fff7e8, #f3dfbd);
+  border: 2px solid #d8b36b;
+  border-radius: 5px;
+  padding: 30px 20px;
+  box-shadow: 0 14px 35px rgba(0,0,0,.3);
+}
+
+.letter::before {
+  content: "♥";
+  display: block;
+  color: #c72c62;
+  font-size: 30px;
+}
+
+.letter p {
+  font-family: 'Amiri', serif;
+  font-size: 21px;
+  line-height: 2;
+}
+
+.seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 75px;
+  height: 75px;
+  margin-top: 10px;
+  border: 3px double #b52858;
+  border-radius: 50%;
+  color: #a21e4c;
+  font-family: 'Amiri', serif;
+  font-weight: bold;
+  transform: rotate(-12deg);
+}
+
+/* النهاية */
+.final-heart {
+  font-size: 70px;
+  display: inline-block;
+  color: #ffb6ce;
+  filter: drop-shadow(0 0 18px rgba(255,135,181,.6));
+  animation: pulse 1.7s infinite;
+}
+
+footer {
+  font-size: 12px;
+  color: rgba(255,235,215,.65);
+  margin-top: 30px;
+}
+
+@media (max-width: 420px) {
+  .scene { padding: 25px 13px; }
+  .card { padding: 20px 15px; }
+  p { font-size: 16px; }
+  .contract { padding: 20px 12px; }
+  .ink-box { transform: scale(.92); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- شاشة الستارة -->
+<div id="curtainScreen">
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+
+  <div class="curtain-center">
+    <div style="font-size:42px;">❤️</div>
+    <h1>ليلة عمرنا</h1>
+    <p>في حكاية صغيرة معمولة مخصوص لأجمل بسبوسة في الدنيا</p>
+    <p class="gold">جاهزة يا ملكة قلبي؟ 👑</p>
+    <button class="btn" id="openCurtain">افتحي ستارة حكايتنا ❤️</button>
+  </div>
+</div>
+
+<!-- المشهد الأول -->
+<section class="scene active" id="scene1">
+  <div class="content">
+    <div class="hall">
+      <div class="hall-arches">✦ ♡ ✦</div>
+      <p class="gold">بسم الحب وبسم الضحكة الحلوة</p>
+      <h1>أهلًا بملكة الدنيا</h1>
+      <div class="divider">✧ ♡ ✧</div>
+      <p>الليلة دي معمولة علشانك إنتِ يا بسبوسة، علشان أقولك بكام طريقة إنك غالية عندي أوي.</p>
+      <div class="names">فيلوباتير <span class="pink">♥</span> بسبوسة</div>
+      <p>كل تفصيلة هنا ليها معنى، وكل كلمة طالعة من قلبي ليكي.</p>
+      <button class="btn" onclick="goToScene(2)">ندخل قاعة الفرح؟ 💒</button>
+    </div>
+  </div>
+</section>
+
+<!-- المشهد الثاني -->
+<section class="scene" id="scene2">
+  <div class="content">
+    <div class="card">
+      <div style="font-size:55px;">💐</div>
+      <h2>دعوة من القلب</h2>
+      <p>إلى بسبوسة الجميلة، صاحبة الضحكة اللي بتنور أي مكان، وصاحبة القلب اللي ليه مكانة خاصة عند فيلوباتير.</p>
+      <p class="gold">اتفضلي يا عروستنا، الليلة ليلتك والفرحة فرحتك ❤️</p>
+      <div class="divider">✦ ✧ ✦</div>
+      <p>تخيلي إن القاعة كلها منورة، والورد في كل مكان، وأجمل حاجة في الليلة كلها هي وجودك.</p>
+      <button class="btn" onclick="goToScene(3)">شوفي الخاتم 💍</button>
+      <button class="btn secondary" onclick="goToScene(1)">رجوع</button>
+    </div>
+  </div>
+</section>
+
+<!-- المشهد الثالث -->
+<section class="scene" id="scene3">
+  <div class="content">
+    <div class="card">
+      <h2>خاتم الوعد 💍</h2>
+
+      <div class="ring-area">
+        <div class="ring"><div class="diamond"></div></div>
+      </div>
+
+      <p>
+        صدقيني حاولت أجيب الخاتم اللي إنتِ كان نفسك فيه وكنتي عاملاله ريبوست،
+        بس معرفتش، وتعبت أوي في الحوار ده ومقدرتش أحطه هنا.
+        فحاولت أعمل شكل شبهه يا روحي.
+      </p>
+
+      <p>وعموماً في كل الحالات سامحيني، وبحبك ❤️</p>
+
+      <p class="gold">يا بسبوسة، إنتِ غالية عندي أكتر من أي هدية، وابتسامتك بالدنيا كلها. ❤️</p>
+
+      <button class="btn" onclick="goToScene(4)">نروح لوعودنا؟ 🥹</button>
+      <button class="btn secondary" onclick="goToScene(2)">رجوع</button>
+    </div>
+  </div>
+</section>
+
+<!-- المشهد الرابع -->
+<section class="scene" id="scene4">
+  <div class="content">
+    <div class="card">
+      <div style="font-size:50px;">🤍</div>
+      <h2>وعودي ليكي يا بسبوسة</h2>
+
+      <p>💗 أوعدك إني عمري ما هسيبك لدماغك لوحدها، وهفضل جنبك أسمعك وأفهمك وأهون عليكي.</p>
+      <p>💗 أوعدك إني عمري ما هسيبك، لأنك حتة مني، ووجودك في حياتي غالي عليا أوي.</p>
+      <p>💗 أوعدك إني أسمعك وأحترم مشاعرك، حتى لو مش عارف أقول إيه.</p>
+      <p>💗 أوعدك إني أفتكر إن الكلمة الحلوة والاهتمام ممكن يفرقوا في يومك.</p>
+      <p>💗 أوعدك إني أشجعك تفرحي بنفسك وبكل حاجة حلوة فيكي.</p>
+      <p>💗 أوعدك إننا نحاول دايمًا نحل أي زعل بالكلام والتفاهم، ونسمع بعض من غير ما نقلل من مشاعر بعض.</p>
+
+      <div class="divider">✧ ♥ ✧</div>
+      <p class="gold">وأهم وعد: هفضل أفكرك إنك غالية ومهمة، وإنك تستاهلي كل حاجة حلوة يا ملكة قلبي. 👑</p>
+
+      <button class="btn" onclick="goToScene(5)">نكتب عقد الجواز؟ 💌</button>
+      <button class="btn secondary" onclick="goToScene(3)">رجوع</button>
+    </div>
+  </div>
+</section>
+
+<!-- المشهد الخامس: عقد الجواز -->
+<section class="scene" id="scene5">
+  <div class="content">
+    <div class="contract">
+      <div style="font-size:42px;">📜</div>
+      <h2>عقد زواج ❤️</h2>
+
+      <div class="contract-title">
+        <p style="margin:0;font-size:18px;">بسم الله الرحمن الرحيم</p>
+        <p style="margin:0;font-size:15px;">عقد الزواج بين العروس والعريس</p>
+      </div>
+
+      <p>
+        تم الاتفاق بين الطرفين على أن تكون علاقتهما قائمة على الاهتمام
+        والاحترام والمودة، وأن يساند كل منهما الآخر، ويحرصا على سعادة
+        بعضهما، وأن تكون بينهما مساحة للكلام والتفاهم وقت الفرح والزعل.
+      </p>
+
+      <p><strong>اسم العروسة:</strong></p>
+
+      <div id="nameEntry">
+        <input
+          id="brideName"
+          type="text"
+          placeholder="اكتبي اسمك يا بسملة ❤️"
+          maxlength="50"
+          autocomplete="off"
+        >
+        <button class="btn" type="button" onclick="confirmBrideName()">
+          تثبيت الاسم ❤️
+        </button>
+      </div>
+
+      <div id="officialNames" class="hidden">
+        <p style="margin-bottom:0;">العروسة والعريس</p>
+        <div class="decorated-names" id="coupleNames"></div>
+      </div>
+
+      <p><strong>اسم العريس:</strong></p>
+      <div class="decorated-names">༺ فيلوباتير ༻</div>
+
+      <div class="divider">❦ ✦ ❦</div>
+
+      <p>
+        <strong>العهد بيننا</strong><br>
+        أن نراعي مشاعر بعضنا، ونحافظ على الاحترام والاهتمام،
+        ونكون سندًا لبعضنا في الأيام الحلوة والصعبة.
+      </p>
+
+      <p class="ink-instruction" id="inkInstruction">
+        دوسي على علبة الحبر علشان تفتحيها وتكملي ❤️👇
+      </p>
+
+      <div class="ink-area">
+        <div class="ink-box" id="inkBox" role="button" tabindex="0" aria-label="افتحي علبة الحبر">
+          <div class="ink-lid"></div>
+          <div class="ink-base"></div>
+          <div class="ink-surface"></div>
+        </div>
+
+        <div id="fingerprintText" class="ink-instruction hidden">
+          دوسي على مكان البصمة علشان تجهزي إمضتك ❤️
+        </div>
+
+        <div class="fingerprint" id="fingerprint" role="button" tabindex="0" aria-label="ضعي بصمتك">
+          ☝️
+        </div>
+
+        <button
+          class="btn hidden"
+          id="confirmFingerprint"
+          type="button"
+          onclick="confirmFingerprint()"
+        >
+          تثبيت البصمة ❤️
+        </button>
+
+        <div class="signatures" id="signatures">
+          <div class="signature">
+            <div class="signature-label" id="brideSignatureName">بسملة</div>
+            <div class="signature-mark" id="brideMark">♥</div>
+            <div class="signature-label">العروسة</div>
+          </div>
+
+          <div class="signature">
+            <div class="signature-label">فيلوباتير</div>
+            <div class="signature-mark inked">فـ</div>
+            <div class="signature-label">العريس</div>
+          </div>
+        </div>
+      </div>
+
+      <p id="contractDone" class="hidden" style="color:#7d2449;font-weight:bold;">
+        ❤️ تم تثبيت الاسم والبصمتين ❤️
+      </p>
+
+      <div class="divider">✦ ❦ ✦</div>
+
+      <button class="btn" onclick="finishContract()">نكمل حكايتنا؟ 💖</button>
+      <button class="btn secondary" onclick="goToScene(4)">رجوع للوعود</button>
+    </div>
+  </div>
+</section>
+
+<!-- المشهد السادس: الرسالة -->
+<section class="scene" id="scene6">
+  <div class="content">
+    <div class="letter">
+      <h2>جواب صغير لبسبوستي 💌</h2>
+
+      <p>
+        يا بسبوسة يا حبيبتي، يا أجمل حاجة في الحكاية دي كلها،
+        أنا عملتلك الموقع ده علشان أفرحك وأشوف ضحكتك،
+        وعلشان أقولك إنك تستاهلي كل حاجة حلوة في الدنيا.
+      </p>
+
+      <p>
+        دي لسه مجرد بداية لحاجات كتير حلوة،
+        ولسه في كلام ومفاجآت وضحك وذكريات مستنيانا.
+        أهم حاجة عندي إنك تفضلي فاكرة إنك مش أقل من حد أبدًا،
+        وإن جمالك وحلاوتك وقلبك حاجات مميزة بطريقتك إنتِ.
+      </p>
+
+      <p>
+        أنا فخور بيكي وبكل حاجة بتفرحك،
+        وحتى حكاية ريبوست يوم 10/10 خلتني أفكر أعملك حاجة
+        صغيرة تليق بفرحتك وتقولك قد إيه إنتِ غالية.
+      </p>
+
+      <p class="gold" style="color:#a12650;">من فيلوباتيرك اللي بيتمنالك كل الفرح ❤️</p>
+      <div class="seal">بحبك</div>
+    </div>
+
+    <button class="btn" onclick="goToScene(7)">آخر مفاجأة يا روحي ❤️</button>
+    <button class="btn secondary" onclick="goToScene(5)">رجوع للعقد</button>
+  </div>
+</section>
+
+<!-- المشهد السابع: النهاية -->
+<section class="scene" id="scene7">
+  <div class="content">
+    <div class="card">
+      <div class="final-heart">❤️</div>
+      <h1>لبسبوستي وملكتي</h1>
+
+      <p>
+        دي ليلة صغيرة وإن شاء الله ليلتنا جاية بجد،
+        ودي حاجة بس صغيرة، الحقيقة لسه الجاي أحلى يا روحي.
+      </p>
+
+      <p>
+        وأنا عملت الموقع ده عشان عملتي ريبوست على يوم 10/10،
+        وأنا بسبوستي متحسش إنها أقل من حد،
+        وهي أصلًا ملكة الدنيا دي كلها بجمالها وحلاوتها،
+        وهي مرات فيلو وفيلوباتيرها بيموت فيها ❤️
+      </p>
+
+      <div class="divider">✧ ♥ ✧ ♥ ✧</div>
+      <div class="names">༺ فيلوباتير ❤️ بسبوسة ༻</div>
+      <p class="gold">أجمل حكاية لسه فصولها الجاية أحلى.</p>
+
+      <button class="btn pulse" onclick="restartStory()">نعيش الحكاية من الأول؟ 💗</button>
+      <footer>صُنعت بكل الحب مخصوص لبسبوسة ❤️</footer>
+    </div>
+  </div>
+</section>
+
+<script>
+const curtainScreen = document.getElementById('curtainScreen');
+const openCurtainButton = document.getElementById('openCurtain');
+
+let inkReady = false;
+let fingerprintReady = false;
+let fingerprintDone = false;
+let confirmedBrideName = '';
+
+openCurtainButton.addEventListener('click', function () {
+  curtainScreen.classList.add('open');
+
+  setTimeout(function () {
+    curtainScreen.style.display = 'none';
+  }, 2100);
+});
+
+function goToScene(number) {
+  document.querySelectorAll('.scene').forEach(function (scene) {
+    scene.classList.remove('active');
+  });
+
+  const nextScene = document.getElementById('scene' + number);
+
+  if (nextScene) {
+    nextScene.classList.remove('active');
+    void nextScene.offsetWidth;
+    nextScene.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+/* تثبيت اسم العروسة */
+const brideNameInput = document.getElementById('brideName');
+const nameEntry = document.getElementById('nameEntry');
+const officialNames = document.getElementById('officialNames');
+const coupleNames = document.getElementById('coupleNames');
+const brideSignatureName = document.getElementById('brideSignatureName');
+
+function confirmBrideName() {
+  const name = brideNameInput.value.trim();
+
+  if (!name) {
+    alert('اكتبي اسمك الأول يا بسملة ❤️');
+    brideNameInput.focus();
+    return;
+  }
+
+  confirmedBrideName = name;
+
+  coupleNames.textContent = '༺ ' + confirmedBrideName + ' ❤️ فيلوباتير ༻';
+  brideSignatureName.textContent = confirmedBrideName;
+
+  nameEntry.classList.add('hidden');
+  officialNames.classList.remove('hidden');
+}
+
+/* فتح علبة الحبر */
+const inkBox = document.getElementById('inkBox');
+const fingerprint = document.getElementById('fingerprint');
+const fingerprintText = document.getElementById('fingerprintText');
+const inkInstruction = document.getElementById('inkInstruction');
+const confirmFingerprintButton = document.getElementById('confirmFingerprint');
+const signatures = document.getElementById('signatures');
+const brideMark = document.getElementById('brideMark');
+const contractDone = document.getElementById('contractDone');
+
+function openInkBox() {
+  if (inkReady) return;
+
+  inkReady = true;
+  inkBox.classList.add('used');
+
+  inkInstruction.textContent = 'علبة الحبر اتفتحت ❤️ دوسي على مكان البصمة.';
+  fingerprintText.classList.remove('hidden');
+  fingerprint.classList.add('show');
+}
+
+inkBox.addEventListener('click', openInkBox);
+
+inkBox.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    openInkBox();
+  }
+});
+
+/* تجهيز البصمة */
+function placeFingerprint() {
+  if (!inkReady || fingerprintReady || fingerprintDone) return;
+
+  if (!confirmedBrideName) {
+    alert('ثبتي اسمك الأول يا بسملة ❤️');
+    brideNameInput.focus();
+    return;
+  }
+
+  fingerprintReady = true;
+  fingerprint.textContent = '♥';
+  fingerprint.classList.add('done');
+  fingerprintText.textContent = 'تمام يا عروسة، دوسي على زرار تثبيت البصمة ❤️';
+  confirmFingerprintButton.classList.remove('hidden');
+}
+
+fingerprint.addEventListener('click', placeFingerprint);
+
+fingerprint.addEventListener('keydown', function(event) {
+  if (event.key === 'Enter' || event.key === ' ') {
+    event.preventDefault();
+    placeFingerprint();
+  }
+});
+
+/* تثبيت البصمة وإظهار البصمتين */
+function confirmFingerprint() {
+  if (!confirmedBrideName) {
+    alert('ثبتي الاسم الأول يا بسملة ❤️');
+    return;
+  }
+
+  if (!inkReady || !fingerprintReady) {
+    alert('افتحي علبة الحبر وجهزي البصمة الأول ❤️');
+    return;
+  }
+
+  fingerprintDone = true;
+
+  fingerprint.classList.add('hidden');
+  fingerprintText.classList.add('hidden');
+  confirmFingerprintButton.classList.add('hidden');
+
+  signatures.classList.add('show');
+  brideMark.classList.add('inked');
+  brideMark.textContent = '♥';
+
+  contractDone.classList.remove('hidden');
+  inkInstruction.textContent = 'اتثبتت البصمتين جنب بعض ❤️';
+}
+
+/* الانتقال للرسالة */
+function finishContract() {
+  if (!confirmedBrideName) {
+    alert('اكتبي اسمك واضغطي تثبيت الاسم الأول يا بسملة ❤️');
+    brideNameInput.focus();
+    return;
+  }
+
+  if (!inkReady) {
+    alert('افتحي علبة الحبر الأول يا عروسة ❤️');
+    return;
+  }
+
+  if (!fingerprintDone) {
+    alert('كملي خطوة البصمة واضغطي على تثبيت البصمة ❤️');
+    return;
+  }
+
+  goToScene(6);
+}
+
+/* إعادة الحكاية من البداية */
+function restartStory() {
+  inkReady = false;
+  fingerprintReady = false;
+  fingerprintDone = false;
+  confirmedBrideName = '';
+
+  inkBox.classList.remove('used');
+
+  fingerprint.classList.remove('show', 'done', 'hidden');
+  fingerprint.textContent = '☝️';
+
+  fingerprintText.classList.add('hidden');
+  fingerprintText.textContent = 'دوسي على مكان البصمة علشان تجهزي إمضتك ❤️';
+
+  confirmFingerprintButton.classList.add('hidden');
+
+  signatures.classList.remove('show');
+  brideMark.classList.remove('inked');
+  brideMark.textContent = '♥';
+
+  contractDone.classList.add('hidden');
+
+  nameEntry.classList.remove('hidden');
+  officialNames.classList.add('hidden');
+  brideNameInput.value = '';
+  coupleNames.textContent = '';
+  brideSignatureName.textContent = 'بسملة';
+
+  inkInstruction.textContent = 'دوسي على علبة الحبر علشان تفتحيها وتكملي ❤️👇';
+
+  curtainScreen.style.display = 'flex';
+  curtainScreen.classList.remove('open');
+
+  goToScene(1);
+}
+
+/* قلوب متحركة في الخلفية */
+function createHeart() {
+  const heart = document.createElement('div');
+  heart.className = 'heart';
+  heart.textContent = ['♥', '♡', '❤', '✦'][Math.floor(Math.random() * 4)];
+
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.fontSize = (12 + Math.random() * 20) + 'px';
+  heart.style.animationDuration = (6 + Math.random() * 7) + 's';
+
+  document.body.appendChild(heart);
+
+  setTimeout(function () {
+    heart.remove();
+  }, 14000);
+}
+
+setInterval(createHeart, 700);
+</script>
+
+</body>
+</html>
